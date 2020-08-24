@@ -14,7 +14,7 @@ import (
 	"time"
 )
 
-var controllerPrefix = "http://localhost:8080/"
+var ControllerPrefix = "http://localhost:8080/"
 
 func PerformRequest(r http.Handler, method, path string, body []byte) (*httptest.ResponseRecorder, *http.Request) {
 	req, _ := http.NewRequest(method, path, bytes.NewBuffer(body))

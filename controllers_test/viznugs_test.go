@@ -1,13 +1,14 @@
-package controllers
+package controllers_test
 
 import (
 	"fmt"
+	. "github.com/DevEdification/v2/controllers_test"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 func TestCreateVizNug(t *testing.T) {
-	endpoint := controllerPrefix + "viznugs/"
+	endpoint := ControllerPrefix + "viznugs/"
 
 	bod, expected := map[string]interface{}{
 		"title":   "Writing API unit tests with Go",
@@ -26,7 +27,7 @@ func TestCreateVizNug(t *testing.T) {
 
 func TestFindVizNug(t *testing.T) {
 	entryID := 1
-	endpoint := controllerPrefix + "viznugs/" + fmt.Sprint(entryID)
+	endpoint := ControllerPrefix + "viznugs/" + fmt.Sprint(entryID)
 
 	expected := `{"id":1,"tech":"golang, api, tdd","title":"Writing API unit tests with Go","author":"Hunter Hartline","gcsc":false,"url":"fuction.pot"}`
 
@@ -37,7 +38,7 @@ func TestFindVizNug(t *testing.T) {
 }
 
 func TestFindVizNugs(t *testing.T) {
-	endpoint := controllerPrefix + "viznugs/"
+	endpoint := ControllerPrefix + "viznugs/"
 
 	expected := `[{"id":1,"tech":"golang, api, tdd","title":"Writing API unit tests with Go","author":"Hunter Hartline","gcsc":false,"url":"fuction.pot"}]`
 	got := FetchGetResponseObject(t, endpoint)
@@ -48,7 +49,7 @@ func TestFindVizNugs(t *testing.T) {
 
 func TestUpdateVizNug(t *testing.T) {
 	entryID := 1
-	endpoint := controllerPrefix + "viznugs/" + fmt.Sprint(entryID)
+	endpoint := ControllerPrefix + "viznugs/" + fmt.Sprint(entryID)
 
 	expected := `{"id":1,"tech":"golang, api, tdd","title":"Writing API unit tests with Go","author":"Hunter Hartline","gcsc":false,"url":"fuction.pot"}`
 
@@ -73,7 +74,7 @@ func TestUpdateVizNug(t *testing.T) {
 
 func TestDeleteVizNug(t *testing.T) {
 	entryID := 1
-	endpoint := controllerPrefix + "viznugs/" + fmt.Sprint(entryID)
+	endpoint := ControllerPrefix + "viznugs/" + fmt.Sprint(entryID)
 
 	isDeleted := ConfirmEntryDeletion(t, endpoint)
 

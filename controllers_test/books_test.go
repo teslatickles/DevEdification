@@ -1,7 +1,8 @@
-package controllers
+package controllers_test
 
 import (
 	"fmt"
+	. "github.com/DevEdification/v2/controllers_test"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -18,7 +19,7 @@ func TestCreateBook(t *testing.T) {
 		"URL":     "https://google.com",
 	}, fmt.Sprintf(`{"id":%v,"title":"The Wind-up Bird Chronicles","release":"1995","author":"Haruki Murakami","url":"https://google.com"}`, globalEntryID)
 
-	endpoint := controllerPrefix + "books"
+	endpoint := ControllerPrefix + "books"
 	got := FetchPostResponseObject(t, endpoint, bod)
 
 	//globalEntryID++
@@ -28,7 +29,7 @@ func TestCreateBook(t *testing.T) {
 }
 
 func TestFindBooks(t *testing.T) {
-	endpoint := controllerPrefix + "books"
+	endpoint := ControllerPrefix + "books"
 
 	got := FetchGetResponseObject(t, endpoint)
 	expected := fmt.Sprintf(`[{"id":%v,"title":"The Wind-up Bird Chronicles","release":"1995","author":"Haruki Murakami","url":"https://google.com"}]`, globalEntryID)
@@ -39,7 +40,7 @@ func TestFindBooks(t *testing.T) {
 
 func TestFindBook(t *testing.T) {
 	entryID := 1
-	endpoint := controllerPrefix + "books/" + fmt.Sprint(entryID)
+	endpoint := ControllerPrefix + "books/" + fmt.Sprint(entryID)
 
 	expected := `{"id":1,"title":"The Wind-up Bird Chronicles","release":"1995","author":"Haruki Murakami","url":"https://google.com"}`
 	got := FetchGetResponseObject(t, endpoint)
@@ -50,7 +51,7 @@ func TestFindBook(t *testing.T) {
 
 func TestUpdateBook(t *testing.T) {
 	entryID := 1
-	endpoint := controllerPrefix + "books/" + fmt.Sprint(entryID)
+	endpoint := ControllerPrefix + "books/" + fmt.Sprint(entryID)
 
 	expected := `{"id":1,"title":"The Wind-up Bird Chronicles","release":"1995","author":"Haruki Murakami","url":"https://google.com"}`
 	got := FetchGetResponseObject(t, endpoint)
@@ -73,7 +74,7 @@ func TestUpdateBook(t *testing.T) {
 
 func TestDeleteBook(t *testing.T) {
 	entryID := 1
-	endpoint := controllerPrefix + "books/" + fmt.Sprint(entryID)
+	endpoint := ControllerPrefix + "books/" + fmt.Sprint(entryID)
 
 	isDeleted := ConfirmEntryDeletion(t, endpoint)
 

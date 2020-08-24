@@ -1,7 +1,8 @@
-package controllers
+package controllers_test
 
 import (
 	"fmt"
+	. "github.com/DevEdification/v2/controllers_test"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -15,7 +16,7 @@ func TestCreateWebsite(t *testing.T) {
 		"url":     "realpython.com",
 	}, `{"id":1,"title":"Real Python","tech":"Python","company":"non-affiliated","author":"Dan","url":"realpython.com"}`
 
-	endpoint := controllerPrefix + "websites/"
+	endpoint := ControllerPrefix + "websites/"
 
 	got := FetchPostResponseObject(t, endpoint, bod)
 
@@ -25,7 +26,7 @@ func TestCreateWebsite(t *testing.T) {
 
 func TestFindWebsite(t *testing.T) {
 	entryID := 1
-	endpoint := controllerPrefix + "websites/" + fmt.Sprint(entryID)
+	endpoint := ControllerPrefix + "websites/" + fmt.Sprint(entryID)
 
 	expected := `{"id":1,"title":"Real Python","tech":"Python","company":"non-affiliated","author":"Dan","url":"realpython.com"}`
 
@@ -38,7 +39,7 @@ func TestFindWebsite(t *testing.T) {
 func TestFindWebsites(t *testing.T) {
 	expected := `[{"id":1,"title":"Real Python","tech":"Python","company":"non-affiliated","author":"Dan","url":"realpython.com"}]`
 
-	endpoint := controllerPrefix + "websites/"
+	endpoint := ControllerPrefix + "websites/"
 	got := FetchGetResponseObject(t, endpoint)
 
 	assertion := assert.New(t)
@@ -47,7 +48,7 @@ func TestFindWebsites(t *testing.T) {
 
 func TestUpdateWebsite(t *testing.T) {
 	entryID := 1
-	endpoint := controllerPrefix + "websites/" + fmt.Sprint(entryID)
+	endpoint := ControllerPrefix + "websites/" + fmt.Sprint(entryID)
 
 	expected := `{"id":1,"title":"Real Python","tech":"Python","company":"non-affiliated","author":"Dan","url":"realpython.com"}`
 
@@ -73,7 +74,7 @@ func TestUpdateWebsite(t *testing.T) {
 
 func TestDeleteWebsite(t *testing.T) {
 	entryID := 1
-	endpoint := controllerPrefix + "websites/" + fmt.Sprint(entryID)
+	endpoint := ControllerPrefix + "websites/" + fmt.Sprint(entryID)
 
 	isDeleted := ConfirmEntryDeletion(t, endpoint)
 
