@@ -22,7 +22,7 @@ type UpdateBookInput struct {
 	URL     string `json:"url"`
 }
 
-// FindBooks
+// FindBooks retrieve a slice of all current books in main.books table
 func FindBooks(c *gin.Context) {
 	var books []models.Book
 	models.DB.Find(&books)
@@ -30,7 +30,7 @@ func FindBooks(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": books})
 }
 
-// FindBook
+// FindBook retrieve a specific book record from main.books using unique ID field
 func FindBook(c *gin.Context) {
 	var book models.Book
 
@@ -42,7 +42,7 @@ func FindBook(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": book})
 }
 
-// CreateBook
+// CreateBook create a new book entry in main.books table
 func CreateBook(c *gin.Context) {
 	var input CreateBookInput
 	if err := c.ShouldBindJSON(&input); err != nil {
@@ -61,7 +61,7 @@ func CreateBook(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": book})
 }
 
-// UpdateBook
+// UpdateBook update a specific book entry based on unique ID field
 func UpdateBook(c *gin.Context) {
 	var update UpdateBookInput
 	if err := c.ShouldBindJSON(&update); err != nil {
@@ -78,7 +78,7 @@ func UpdateBook(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": true})
 }
 
-// DeleteBook
+// DeleteBook delete a specific book entry from main.books table based on unique ID field
 func DeleteBook(c *gin.Context) {
 	var book models.Book
 	if err := models.DB.Where("id = ?", c.Param("id")).First(&book).Error; err != nil {

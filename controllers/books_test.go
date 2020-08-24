@@ -8,7 +8,7 @@ import (
 
 // need to handle these tests with a mock db????
 // or some other way of handling ID not matching after running intial tests
-var globalEntryID uint
+var globalEntryID uint = 1
 
 func TestCreateBook(t *testing.T) {
 	bod, expected := map[string]interface{} {
@@ -16,10 +16,12 @@ func TestCreateBook(t *testing.T) {
 		"release": "1995",
 		"author":  "Haruki Murakami",
 		"URL":     "https://google.com",
-	}, `{"id":1,"title":"The Wind-up Bird Chronicles","release":"1995","author":"Haruki Murakami","url":"https://google.com"}`
+	}, fmt.Sprintf(`{"id":%v,"title":"The Wind-up Bird Chronicles","release":"1995","author":"Haruki Murakami","url":"https://google.com"}`, globalEntryID)
 
 	endpoint := controllerPrefix + "books"
 	got := FetchPostResponseObject(t, endpoint, bod)
+
+	//globalEntryID++
 
 	assertions := assert.New(t)
 	assertions.Equal(expected, got, "The returned response %v should match expected %v", got, expected)
@@ -29,7 +31,7 @@ func TestFindBooks(t *testing.T) {
 	endpoint := controllerPrefix + "books"
 
 	got := FetchGetResponseObject(t, endpoint)
-	expected := `[{"id":1,"title":"The Wind-up Bird Chronicles","release":"1995","author":"Haruki Murakami","url":"https://google.com"}]`
+	expected := fmt.Sprintf(`[{"id":%v,"title":"The Wind-up Bird Chronicles","release":"1995","author":"Haruki Murakami","url":"https://google.com"}]`, globalEntryID)
 
 	assertions := assert.New(t)
 	assertions.Equal(expected, got, "The returned response %v should match expected %v", got, expected)
@@ -74,6 +76,8 @@ func TestDeleteBook(t *testing.T) {
 	endpoint := controllerPrefix + "books/" + fmt.Sprint(entryID)
 
 	isDeleted := ConfirmEntryDeletion(t, endpoint)
+
+	globalEntryID += 1
 
 	assertions := assert.New(t)
 	assertions.True(isDeleted)
