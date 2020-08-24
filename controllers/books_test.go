@@ -6,6 +6,10 @@ import (
 	"testing"
 )
 
+// need to handle these tests with a mock db????
+// or some other way of handling ID not matching after running intial tests
+var globalEntryID uint
+
 func TestCreateBook(t *testing.T) {
 	bod, expected := map[string]interface{} {
 		"title":   "The Wind-up Bird Chronicles",
