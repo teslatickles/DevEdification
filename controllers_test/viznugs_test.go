@@ -2,7 +2,6 @@ package controllers_test
 
 import (
 	"fmt"
-	. "github.com/DevEdification/v2/controllers_test"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
