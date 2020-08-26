@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	models "github.com/DevEdification/v2/models"
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
 	"log"
@@ -15,6 +16,19 @@ import (
 )
 
 var ControllerPrefix = "http://localhost:8080/"
+
+//func ReturnStoredSQL(statement uint) {
+//	switch statement {
+//	case 1:
+//		sql := "CREATE TABLE IF NOT EXISTS core_test.`books` (
+//    `id` int(11) DEFAULT NULL,
+//    `title` varchar(100),
+//    `release` varchar(4),
+//    `author` varchar(50),
+//    `url` varchar(150)
+//);"
+//	}
+//}
 
 func PerformRequest(r http.Handler, method, path string, body []byte) (*httptest.ResponseRecorder, *http.Request) {
 	req, _ := http.NewRequest(method, path, bytes.NewBuffer(body))
@@ -151,4 +165,38 @@ func CheckStatusCode(t *testing.T, resp *http.Response) int {
 		t.Logf("passed with Status Code %v", status)
 	}
 	return resp.StatusCode
+}
+
+//func EnsureTestDatabaseExists() {
+//	sql := ``
+//
+//	//err := gorm.DB.CreateTable(table).Error
+//	//if err != nil {
+//	//	log.Println(err)
+//	//}
+//}
+
+//func CleanupTestDatabase(sqlStatement string) {
+//	var sql string
+//
+//	switch sqlStatement {
+//	case "books":
+//		sql = `TRUNCATE TABLE core_test.books;`
+//		break
+//	case "users":
+//		sql = `TRUNCATE TABLE core_test.users;`
+//		break
+//	case "viznugs":
+//		sql = `TRUNCATE TABLE core_test.viznugs;`
+//		break
+//	case "websites":
+//		sql = `TRUNCATE TABLE core_test.websites;`
+//		break
+//	}
+//	models.DB.Exec(sql)
+//}
+
+func ResetDB() {
+	models.DB.DropTable(models.Book{}, models.Website{}, models.User{}, models.VizNug{})
+	models.DB.AutoMigrate(models.Book{}, models.Website{}, models.VizNug{}, models.User{})
 }

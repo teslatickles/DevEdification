@@ -6,22 +6,23 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
+
 type CreateVizNugInput struct {
-	Title 	string	`json:"title" binding:"required"`
-	Tech 	string 	`json:"tech" binding:"required"`
-	Company string  `json:"company" binding:"required"`
-	Author 	string 	`json:"author" binding:"required"`
-	GCSC	bool	`json:"gcsc"`
-	URL		string 	`json:"url" binding:"required"`
+	Title   string `json:"title" binding:"required"`
+	Tech    string `json:"tech" binding:"required"`
+	Company string `json:"company" binding:"required"`
+	Author  string `json:"author" binding:"required"`
+	GCSC    bool   `json:"gcsc"`
+	URL     string `json:"url" binding:"required"`
 }
 
 type UpdateVizNugInput struct {
-	Title 	string	`json:"title"`
-	Tech 	string 	`json:"tech"`
-	Company string  `json:"company"`
-	Author 	string 	`json:"author"`
-	GCSC	bool	`json:"gcsc"`
-	URL		string 	`json:"url"`
+	Title   string `json:"title"`
+	Tech    string `json:"tech"`
+	Company string `json:"company"`
+	Author  string `json:"author"`
+	GCSC    bool   `json:"gcsc"`
+	URL     string `json:"url"`
 }
 
 func FindVizNugs(c *gin.Context) {
@@ -42,6 +43,7 @@ func FindVizNug(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": viznug})
 }
 
+//CreateVizNug adds viznug record to viznug table
 func CreateVizNug(c *gin.Context) {
 	var input CreateVizNugInput
 	if err := c.ShouldBindJSON(&input); err != nil {
@@ -83,7 +85,6 @@ func UpdateVizNug(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
 		return
 	}
-
 
 	c.JSON(http.StatusOK, gin.H{"data": true})
 }

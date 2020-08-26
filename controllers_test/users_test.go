@@ -7,6 +7,11 @@ import (
 )
 
 func TestCreateUser(t *testing.T) {
+	//CleanupTestDatabase("users")
+
+	//sql := `TRUNCATE TABLE core_test.users;`
+	//t.Cleanup()
+
 	bod, expected := map[string]interface{}{
 		"username":"lampin_larry",
 		"password":"serenitynow",
@@ -35,4 +40,6 @@ func TestDeleteUser(t *testing.T) {
 	isDeleted := ConfirmEntryDeletion(t, endpoint)
 	assertion := assert.New(t)
 	assertion.True(isDeleted)
+
+	//CleanupTestDatabase("users")
 }

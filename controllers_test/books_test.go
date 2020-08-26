@@ -8,7 +8,7 @@ import (
 
 // need to handle these tests with a mock db????
 // or some other way of handling ID not matching after running intial tests
-var globalEntryID uint = 1
+//var globalEntryID uint = 1
 
 func TestCreateBook(t *testing.T) {
 	bod, expected := map[string]interface{} {
@@ -16,7 +16,7 @@ func TestCreateBook(t *testing.T) {
 		"release": "1995",
 		"author":  "Haruki Murakami",
 		"URL":     "https://google.com",
-	}, fmt.Sprintf(`{"id":%v,"title":"The Wind-up Bird Chronicles","release":"1995","author":"Haruki Murakami","url":"https://google.com"}`, globalEntryID)
+	}, fmt.Sprintf(`{"id":%v,"title":"The Wind-up Bird Chronicles","release":"1995","author":"Haruki Murakami","url":"https://google.com"}`, 1)
 
 	endpoint := ControllerPrefix + "books"
 	got := FetchPostResponseObject(t, endpoint, bod)
@@ -31,7 +31,7 @@ func TestFindBooks(t *testing.T) {
 	endpoint := ControllerPrefix + "books"
 
 	got := FetchGetResponseObject(t, endpoint)
-	expected := fmt.Sprintf(`[{"id":%v,"title":"The Wind-up Bird Chronicles","release":"1995","author":"Haruki Murakami","url":"https://google.com"}]`, globalEntryID)
+	expected := fmt.Sprintf(`[{"id":%v,"title":"The Wind-up Bird Chronicles","release":"1995","author":"Haruki Murakami","url":"https://google.com"}]`, 1)
 
 	assertions := assert.New(t)
 	assertions.Equal(expected, got, "The returned response %v should match expected %v", got, expected)
@@ -69,6 +69,7 @@ func TestUpdateBook(t *testing.T) {
 	}
 
 	assertion.Equal(newExpected, nowGot)
+	//ResetDB()
 }
 
 func TestDeleteBook(t *testing.T) {
@@ -77,8 +78,9 @@ func TestDeleteBook(t *testing.T) {
 
 	isDeleted := ConfirmEntryDeletion(t, endpoint)
 
-	globalEntryID += 1
+	//globalEntryID += 1
 
 	assertions := assert.New(t)
 	assertions.True(isDeleted)
+	//ResetDB()
 }

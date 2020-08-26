@@ -10,7 +10,6 @@ import (
 func InitRoutes() {
 	// Init gin engine
 	r := InitGin()
-	//gin.SetMode(gin.ReleaseMode)
 
 	// Book routes
 	r.GET("/books/:id", controllers.FindBook)
