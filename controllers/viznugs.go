@@ -53,14 +53,6 @@ func CreateVizNug(c *gin.Context) {
 		return
 	}
 
-	//viznugSample := models.VizNug{
-	//	Tech:   "Fortran",
-	//	Title:  "Long ago...",
-	//	Author: "Kanye Westpointe",
-	//	GCSC:   false,
-	//	URL:    "https://britisheyesonly.uk",
-	//}
-
 	viznug := models.VizNug{
 		Tech:   input.Tech,
 		Title:  input.Title,

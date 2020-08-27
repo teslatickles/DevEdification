@@ -29,13 +29,4 @@ func ConnectDataBase() {
 	databaseTest.AutoMigrate(dbModels...)
 
 	DB = databaseTest
-
-	// this is an attempt to handle testing the api cleanly
-	// but needs a lot of work/investigation/whatnot
-	// help me... hehe
-	//if gin.ReleaseMode == "release" {
-	//	DB = databaseTest
-	//} else {
-	//	DB = database
-	//}
 }
