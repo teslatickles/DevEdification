@@ -27,6 +27,7 @@ func TestCreateBook(t *testing.T) {
 	got := FetchPostResponseObject(t, endpoint, bod)
 
 	//globalEntryID++
+	//models.DB.Table("books").Exec("truncate table")
 
 	assertions := assert.New(t)
 	assertions.Equal(expected, got, "The returned response %v should match expected %v", got, expected)

@@ -12,12 +12,7 @@ import (
 // also, initializes all routes for api
 func initRoutes() {
 	// Init gin engine
-<<<<<<< Updated upstream
-	r := InitGin()
-	//gin.SetMode(gin.ReleaseMode)
-=======
 	r := initGin()
->>>>>>> Stashed changes
 
 	// Book routes
 	r.GET("/books/:id", controllers.FindBook)
@@ -59,7 +54,7 @@ func initRoutes() {
 func initGin() *gin.Engine {
 	r := gin.Default()
 
-	r.GET("/", func(c *gin.Context){
+	r.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"data": "Welcome to Vizient's Software Wizard Manual"})
 	})
 
