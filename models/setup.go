@@ -2,6 +2,7 @@ package models
 
 import (
 	"github.com/jinzhu/gorm"
+	// import gorm for mysql dialect
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"log"
 )
