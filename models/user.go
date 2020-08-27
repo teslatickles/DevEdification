@@ -1,6 +1,7 @@
 package models
 
 import (
+	// gorm is imported for primary_key prop
 	_ "github.com/jinzhu/gorm"
 )
 
