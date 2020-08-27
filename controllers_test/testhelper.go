@@ -14,15 +14,18 @@ import (
 	"time"
 )
 
+// ControllerPrefix global exported variable referencing localhost url for controller calls
 var ControllerPrefix = "http://localhost:8080/"
 
-func PerformRequest(r http.Handler, method, path string, body []byte) (*httptest.ResponseRecorder, *http.Request) {
+// performRequest helper method to correctly handle executing gin requests necessary to test api
+func performRequest(r http.Handler, method, path string, body []byte) (*httptest.ResponseRecorder, *http.Request) {
 	req, _ := http.NewRequest(method, path, bytes.NewBuffer(body))
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 	return w, req
 }
 
+// FetchGetResponseObject fetch response returned from passed url (endpoint) to api
 func FetchGetResponseObject(t *testing.T, endpoint string) string {
 	timeout := 5 * time.Second
 	client := http.Client{
@@ -30,24 +33,25 @@ func FetchGetResponseObject(t *testing.T, endpoint string) string {
 	}
 
 	router := gin.Default()
-	_, req := PerformRequest(router, "GET", endpoint, nil)
+	_, req := performRequest(router, "GET", endpoint, nil)
 
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	CheckStatusCode(t, resp)
+	checkStatusCode(t, resp)
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	got := TrimResponse(body)
+	got := trimResponse(body)
 	return got
 }
 
+// FetchPostResponseObject fetch response returned from passed request (endpoint) using passed body (bod)
 func FetchPostResponseObject(t *testing.T, endpoint string, bod map[string]interface{}) string {
 	requestBody, err := json.Marshal(bod)
 	if err != nil {
@@ -60,7 +64,7 @@ func FetchPostResponseObject(t *testing.T, endpoint string, bod map[string]inter
 	}
 
 	router := gin.Default()
-	_, req := PerformRequest(router, "POST", endpoint, requestBody)
+	_, req := performRequest(router, "POST", endpoint, requestBody)
 
 	req.Header.Set("Content-Type", "application/json")
 
@@ -69,7 +73,7 @@ func FetchPostResponseObject(t *testing.T, endpoint string, bod map[string]inter
 		log.Fatalln(err)
 	}
 
-	CheckStatusCode(t, resp)
+	checkStatusCode(t, resp)
 
 	defer resp.Body.Close()
 
@@ -78,11 +82,12 @@ func FetchPostResponseObject(t *testing.T, endpoint string, bod map[string]inter
 		log.Fatalln(err)
 	}
 
-	got := TrimResponse(body)
+	got := trimResponse(body)
 
 	return got
 }
 
+// ConfirmEntryUpdate confirm targeted record was updated based on id and body (bod)
 func ConfirmEntryUpdate(t *testing.T, endpoint string, bod map[string]interface{}) bool {
 	requestBody, err := json.Marshal(bod)
 	if err != nil {
@@ -95,7 +100,7 @@ func ConfirmEntryUpdate(t *testing.T, endpoint string, bod map[string]interface{
 	}
 
 	router := gin.Default()
-	_, req := PerformRequest(router, "PATCH", endpoint, requestBody)
+	_, req := performRequest(router, "PATCH", endpoint, requestBody)
 	req.Header.Set("Content-Type", "application/json")
 
 	resp, err := client.Do(req)
@@ -103,11 +108,12 @@ func ConfirmEntryUpdate(t *testing.T, endpoint string, bod map[string]interface{
 		log.Fatalln(err)
 	}
 
-	isStatusOkay := CheckStatusCode(t, resp) == http.StatusOK
+	isStatusOkay := checkStatusCode(t, resp) == http.StatusOK
 
 	return isStatusOkay
 }
 
+// ConfirmEntryDeletion confirm (return true or false) if a specific record has been deleted based on id
 func ConfirmEntryDeletion(t *testing.T, endpoint string) bool {
 	timeout := 5 * time.Second
 	client := http.Client{
@@ -115,34 +121,36 @@ func ConfirmEntryDeletion(t *testing.T, endpoint string) bool {
 	}
 
 	router := gin.Default()
-	_, req := PerformRequest(router, "DELETE", endpoint, nil)
+	_, req := performRequest(router, "DELETE", endpoint, nil)
 
 	_, err := client.Do(req)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	//CheckStatusCode(t, resp)
+	//checkStatusCode(t, resp)
 
-	_, fetchReq := PerformRequest(router, "GET", endpoint, nil)
+	_, fetchReq := performRequest(router, "GET", endpoint, nil)
 
 	fetchResponse, err := client.Do(fetchReq)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	isDeleted := CheckStatusCode(t, fetchResponse) == http.StatusBadRequest
+	isDeleted := checkStatusCode(t, fetchResponse) == http.StatusBadRequest
 
 	return isDeleted
 }
 
-func TrimResponse(body []byte) string {
+// trimResponse trim extraneous bits from returned response
+func trimResponse(body []byte) string {
 	rawBody := strings.TrimSuffix(string(body), `}`)
 	got := strings.TrimPrefix(rawBody, `{"data":`)
 	return got
 }
 
-func CheckStatusCode(t *testing.T, resp *http.Response) int {
+// checkStatusCode check status code of returned response
+func checkStatusCode(t *testing.T, resp *http.Response) int {
 	if status := resp.StatusCode; status != http.StatusOK {
 		t.Logf("handler returned wrong status code: got %v want %v",
 			fmt.Sprint(status), http.StatusOK)
