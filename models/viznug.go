@@ -1,5 +1,6 @@
 package models
 
+// gorm is imported as side-effect to set primary key in string literal
 import _ "github.com/jinzhu/gorm"
 
 // VizNug struct that defines viznug model
