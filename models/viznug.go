@@ -1,8 +1,10 @@
 package models
 
 // gorm is imported as side-effect to set primary key in string literal
-import _ "github.com/jinzhu/gorm"
-
+import (
+	// gorm imported for primary_key side-effects
+	_ "github.com/jinzhu/gorm"
+)
 // VizNug struct that defines viznug model
 // GCSC is an initialism for General Computer Science Concept
 type VizNug struct {
