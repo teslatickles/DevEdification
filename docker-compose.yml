@@ -1,0 +1,67 @@
+version: '3'
+services:
+
+  app:
+    container_name: main_app
+    build: .
+    ports:
+      - 8080:8080
+    restart: on-failure
+#    volumes:
+#      - api:/usr/src/app/
+    environment:
+      DATABASE_URL: root:1Paraprosdokian9@cloudsql-proxy:3306/amozone_core
+    depends_on:
+#      - fullstack-mysql
+      - cloudsql-proxy
+#    networks:
+#      - fullstack
+
+
+  cloudsql-proxy:
+    container_name: cloudsql-proxy
+    image: gcr.io/cloudsql-docker/gce-proxy:1.11
+    command: ["./cloud_sql_proxy", "-instances=amiable-alcove-282005:us-central1:amozone=tcp:cloudsql-proxy:3306"]
+    volumes:
+      - ./credentials/credentials.json
+    ports:
+      - 3306:3306
+    restart: always
+#  volumes:
+#    api:
+#    database_mysql:
+
+  # Networks to be created to facilitate communication between containers
+#  networks:
+#    fullstack:
+#      driver: bridge
+
+#  fullstack-mysql:
+#    image: mysql:5.7
+#    container_name: full_db_mysql
+#    ports:
+#      - 3306:3306
+#    environment:
+#      - MYSQL_ROOT_HOST=${DB_HOST}
+#      - MYSQL_USER=${DB_USER}
+#      - MYSQL_PASSWORD=${DB_PASSWORD}
+#      - MYSQL_DATABASE=${DB_NAME}
+#      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+#    volumes:
+#      - databse_mysql:/var/lib/mysql
+#    networks:
+#      - fullstack
+
+#  phpmyadmin:
+#    image: phpmyadmin/phpmyadmin
+#    container_name: phpmyadmin_container
+#    depends_on:
+#      - fullstack-mysql
+#    environment:
+
+
+
+
+# Google cloud configuration
+#
+# cloud-sql-proxy service
