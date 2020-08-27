@@ -1,7 +1,9 @@
 package models
 
-import _ "github.com/jinzhu/gorm"
-
+import (
+	// gorm imported for primary_key side-effects
+	_ "github.com/jinzhu/gorm"
+)
 // Website struct that defines website model
 type Website struct {
 	ID      uint   `json:"id" gorm:"primary_key"`
