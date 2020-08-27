@@ -12,6 +12,10 @@ import (
 var globalEntryID uint = 1
 
 func TestCreateBook(t *testing.T) {
+	// the twos of these variables here are for
+	// setting your response body to be sent in test
+	// api request and expected response from that
+	// request, respectively
 	bod, expected := map[string]interface{} {
 		"title":   "The Wind-up Bird Chronicles",
 		"release": "1995",

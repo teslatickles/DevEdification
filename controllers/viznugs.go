@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
+<<<<<<< Updated upstream
 type CreateVizNugInput struct {
 	Title 	string	`json:"title" binding:"required"`
 	Tech 	string 	`json:"tech" binding:"required"`
@@ -22,8 +23,28 @@ type UpdateVizNugInput struct {
 	Author 	string 	`json:"author"`
 	GCSC	bool	`json:"gcsc"`
 	URL		string 	`json:"url"`
+=======
+
+type createVizNugInput struct {
+	Title   string `json:"title" binding:"required"`
+	Tech    string `json:"tech" binding:"required"`
+	Company string `json:"company" binding:"required"`
+	Author  string `json:"author" binding:"required"`
+	GCSC    bool   `json:"gcsc"`
+	URL     string `json:"url" binding:"required"`
 }
 
+type updateVizNugInput struct {
+	Title   string `json:"title"`
+	Tech    string `json:"tech"`
+	Company string `json:"company"`
+	Author  string `json:"author"`
+	GCSC    bool   `json:"gcsc"`
+	URL     string `json:"url"`
+>>>>>>> Stashed changes
+}
+
+// FindVizNugs list all viznugs currently in db
 func FindVizNugs(c *gin.Context) {
 	var viznugs []models.VizNug
 	models.DB.Find(&viznugs)
@@ -31,6 +52,7 @@ func FindVizNugs(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": viznugs})
 }
 
+// FindVizNug find specific viznug based on id
 func FindVizNug(c *gin.Context) {
 	var viznug models.VizNug
 
@@ -42,8 +64,12 @@ func FindVizNug(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": viznug})
 }
 
+<<<<<<< Updated upstream
+=======
+// CreateVizNug add new viznug entry to viznug table
+>>>>>>> Stashed changes
 func CreateVizNug(c *gin.Context) {
-	var input CreateVizNugInput
+	var input createVizNugInput
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -70,8 +96,9 @@ func CreateVizNug(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": viznug})
 }
 
+// UpdateVizNug update specific viznug based on id
 func UpdateVizNug(c *gin.Context) {
-	var update UpdateVizNugInput
+	var update updateVizNugInput
 	if err := c.ShouldBindJSON(&update); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
 		return
@@ -88,6 +115,7 @@ func UpdateVizNug(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": true})
 }
 
+// DeleteVizNug delete specific viznug based on id
 func DeleteVizNug(c *gin.Context) {
 	var viznug models.VizNug
 	if err := models.DB.Where("id = ?", c.Param("id")).First(&viznug).Error; err != nil {

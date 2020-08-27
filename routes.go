@@ -7,10 +7,17 @@ import (
 	"net/http"
 )
 
-func InitRoutes() {
+// initRoutes invokes initGin to init the gin engine
+// http framework allowing for router with baked-in goodies
+// also, initializes all routes for api
+func initRoutes() {
 	// Init gin engine
+<<<<<<< Updated upstream
 	r := InitGin()
 	//gin.SetMode(gin.ReleaseMode)
+=======
+	r := initGin()
+>>>>>>> Stashed changes
 
 	// Book routes
 	r.GET("/books/:id", controllers.FindBook)
@@ -36,9 +43,10 @@ func InitRoutes() {
 	// User routes
 	r.GET("/users/:id", controllers.FindUser)
 	r.POST("/users", controllers.CreateUser)
+	r.PATCH("/users/:id", controllers.UpdateUser)
 	r.DELETE("/users/:id", controllers.DeleteUser)
 
-	// attach router to server while handling errors
+	// attach router to server - handle errors
 	err := r.Run()
 	if err != nil {
 		log.Fatalln(err)
@@ -46,7 +54,9 @@ func InitRoutes() {
 
 }
 
-func InitGin() *gin.Engine {
+// initGin initialize gin engine with default configuration
+// set landing page and return router variable r
+func initGin() *gin.Engine {
 	r := gin.Default()
 
 	r.GET("/", func(c *gin.Context){
@@ -55,4 +65,3 @@ func InitGin() *gin.Engine {
 
 	return r
 }
-

@@ -6,16 +6,14 @@ import (
 	"net/http"
 )
 
-// CreateBookInput
-type CreateBookInput struct {
+type createBookInput struct {
 	Title   string `json:"title" binding:"required"`
 	Release string `json:"release" binding:"required"`
 	Author  string `json:"author" binding:"required"`
 	URL     string `json:"url" binding:"required"`
 }
 
-// UpdateBookInput
-type UpdateBookInput struct {
+type updateBookInput struct {
 	Title   string `json:"title"`
 	Release string `json:"release"`
 	Author  string `json:"author"`
@@ -44,7 +42,7 @@ func FindBook(c *gin.Context) {
 
 // CreateBook create a new book entry in main.books table
 func CreateBook(c *gin.Context) {
-	var input CreateBookInput
+	var input createBookInput
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -63,7 +61,7 @@ func CreateBook(c *gin.Context) {
 
 // UpdateBook update a specific book entry based on unique ID field
 func UpdateBook(c *gin.Context) {
-	var update UpdateBookInput
+	var update updateBookInput
 	if err := c.ShouldBindJSON(&update); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

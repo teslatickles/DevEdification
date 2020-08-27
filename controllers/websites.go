@@ -6,8 +6,9 @@ import (
 	"net/http"
 )
 
-// CreateWebsiteInput
-type CreateWebsiteInput struct {
+// createWebsiteInput input struct used for creating
+// new website entry in db
+type createWebsiteInput struct {
 	Title 	string	`json:"title" binding:"required"`
 	Tech 	string 	`json:"tech" binding:"required"`
 	Company string  `json:"company" binding:"required"`
@@ -15,8 +16,9 @@ type CreateWebsiteInput struct {
 	URL		string 	`json:"url" binding:"required"`
 }
 
-// UpdateWebsiteInput
-type UpdateWebsiteInput struct {
+// updateWebsiteInput input struct used for
+// updating existing website entry with new values
+type updateWebsiteInput struct {
 	Title 	string	`json:"title"`
 	Tech 	string  `json:"tech"`
 	Company	string  `json:"company"`
@@ -24,7 +26,7 @@ type UpdateWebsiteInput struct {
 	URL		string 	`json:"url"`
 }
 
-// FindWebsites
+// FindWebsites list all website entries contained in database
 func FindWebsites(c *gin.Context) {
 	var websites []models.Website
 	models.DB.Find(&websites)
@@ -32,7 +34,7 @@ func FindWebsites(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": websites})
 }
 
-// FindWebsite
+// FindWebsite find website entry based on id
 func FindWebsite(c *gin.Context) {
 	var website models.Website
 
@@ -44,9 +46,9 @@ func FindWebsite(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": website})
 }
 
-// CreateWebsite
+// CreateWebsite create new website
 func CreateWebsite(c *gin.Context) {
-	var input CreateWebsiteInput
+	var input createWebsiteInput
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -64,9 +66,9 @@ func CreateWebsite(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": website})
 }
 
-// UpdateWebsite
+// UpdateWebsite update website based on id
 func UpdateWebsite(c *gin.Context) {
-	var update UpdateWebsiteInput
+	var update updateWebsiteInput
 	if err := c.ShouldBindJSON(&update); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -81,7 +83,7 @@ func UpdateWebsite(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data":&update})
 }
 
-// DeleteWebsite
+// DeleteWebsite delete website entry based on id
 func DeleteWebsite(c *gin.Context) {
 	var website models.Website
 	if err := models.DB.Where("id = ?", c.Param("id")).First(&website).Error; err != nil {

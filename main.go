@@ -6,5 +6,5 @@ import (
 
 func main() {
 	models.ConnectDataBase()
-	InitRoutes()
+	initRoutes()
 }
