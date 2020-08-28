@@ -1,9 +1,10 @@
 package models
 
 import (
-    // gorm is imported for side-effects allowing primary_key props
-    _ "github.com/jinzhu/gorm" 
+	// gorm is imported for side-effects allowing primary_key props
+	_ "github.com/jinzhu/gorm"
 )
+
 // Book struct defining book model
 type Book struct {
 	ID      uint   `json:"id" gorm:"primary_key;unique;not null"`

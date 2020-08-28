@@ -9,21 +9,21 @@ import (
 // createWebsiteInput input struct used for creating
 // new website entry in db
 type createWebsiteInput struct {
-	Title 	string	`json:"title" binding:"required"`
-	Tech 	string 	`json:"tech" binding:"required"`
-	Company string  `json:"company" binding:"required"`
-	Author 	string 	`json:"author" binding:"required"`
-	URL		string 	`json:"url" binding:"required"`
+	Title   string `json:"title" binding:"required"`
+	Tech    string `json:"tech" binding:"required"`
+	Company string `json:"company" binding:"required"`
+	Author  string `json:"author" binding:"required"`
+	URL     string `json:"url" binding:"required"`
 }
 
 // updateWebsiteInput input struct used for
 // updating existing website entry with new values
 type updateWebsiteInput struct {
-	Title 	string	`json:"title"`
-	Tech 	string  `json:"tech"`
-	Company	string  `json:"company"`
-	Author 	string 	`json:"author"`
-	URL		string 	`json:"url"`
+	Title   string `json:"title"`
+	Tech    string `json:"tech"`
+	Company string `json:"company"`
+	Author  string `json:"author"`
+	URL     string `json:"url"`
 }
 
 // FindWebsites list all website entries contained in database
@@ -55,11 +55,11 @@ func CreateWebsite(c *gin.Context) {
 	}
 
 	website := models.Website{
-		Title:  input.Title,
-		Tech: input.Tech,
+		Title:   input.Title,
+		Tech:    input.Tech,
 		Company: input.Company,
-		Author: input.Author,
-		URL:    input.URL,
+		Author:  input.Author,
+		URL:     input.URL,
 	}
 	models.DB.FirstOrCreate(&website)
 
@@ -80,7 +80,7 @@ func UpdateWebsite(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data":&update})
+	c.JSON(http.StatusOK, gin.H{"data": &update})
 }
 
 // DeleteWebsite delete website entry based on id

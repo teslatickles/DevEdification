@@ -5,6 +5,7 @@ import (
 	// gorm imported for primary_key side-effects
 	_ "github.com/jinzhu/gorm"
 )
+
 // VizNug struct that defines viznug model
 // GCSC is an initialism for General Computer Science Concept
 type VizNug struct {

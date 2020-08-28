@@ -12,7 +12,7 @@ func TestCreateBook(t *testing.T) {
 	// setting your response body to be sent in test
 	// api request and expected response from that
 	// request, respectively
-	bod, expected := map[string]interface{} {
+	bod, expected := map[string]interface{}{
 		"title":   "The Wind-up Bird Chronicles",
 		"release": "1995",
 		"author":  "Haruki Murakami",
@@ -59,7 +59,7 @@ func TestUpdateBook(t *testing.T) {
 	assertion := assert.New(t)
 	assertion.Equal(expected, got)
 
-	bod := map[string]interface{}{"title":"Norwegian Wood", "release":"1987"}
+	bod := map[string]interface{}{"title": "Norwegian Wood", "release": "1987"}
 	newExpected := `{"id":1,"title":"Norwegian Wood","release":"1987","author":"Haruki Murakami","url":"https://google.com"}`
 
 	var nowGot string

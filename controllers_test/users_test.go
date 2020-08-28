@@ -9,8 +9,8 @@ import (
 
 func TestCreateUser(t *testing.T) {
 	bod, expected := map[string]interface{}{
-		"username":"lampin_larry",
-		"password":"serenitynow",
+		"username": "lampin_larry",
+		"password": "serenitynow",
 	}, `{"id":1,"username":"lampin_larry"}`
 
 	endpoint := ControllerPrefix + "users"
