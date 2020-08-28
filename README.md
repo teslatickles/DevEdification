@@ -2,6 +2,6 @@
 
 Test-Driven-Developed RESTful API written solely in Go (Gorm, Gin, Go)
 
-Golang rest api developed using TDD. Databases are hosted in Google Cloud Platform (SQL server - MySql)
+Golang rest api developed using TDD. Databases are hosted on Google Cloud Platform (SQL server - MySql)
 
 This readme will be updated soon
