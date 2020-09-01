@@ -40,6 +40,7 @@ func initRoutes() {
 	r.POST("/users", controllers.CreateUser)
 	r.PATCH("/users/:id", controllers.UpdateUser)
 	r.DELETE("/users/:id", controllers.DeleteUser)
+	r.POST("/login", controllers.Login)
 
 	// attach router to server - handle errors
 	err := r.Run()
