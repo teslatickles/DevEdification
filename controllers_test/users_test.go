@@ -5,7 +5,7 @@ import (
 	. "github.com/DevEdification/v2/controllers_test"
 	"github.com/DevEdification/v2/models"
 	"github.com/stretchr/testify/assert"
-	"log"
+	"net/http"
 	"testing"
 )
 
@@ -43,22 +43,39 @@ func TestDeleteUser(t *testing.T) {
 }
 
 func TestLogin(t *testing.T) {
-	user := models.User{
-		Username: "momonono",
-		Password: "password",
-		Email: 	  "meow@moo.neigh",
-		Role:	  "member",
+	//validUser := models.User{
+	//	Username: "momonono",
+	//	Password: "password",
+	//	Email: 	  "meow@moo.neigh",
+	//	Role:	  "member",
+	//}
+	//validBod := map[string]interface{}{
+	//	"username": validUser.Username,
+	//	"password": validUser.Password,
+	//	"email":    validUser.Email,
+	//	"role":     "member",
+	//}
+
+	invalidUser := models.User{
+		Username: "papatofu",
+		Password: "pwd",
+		Email:    "loveisreal@maybe.barf",
+		Role:     "guest",
 	}
-	bod := map[string]interface{}{
-		"username": user.Username,
-		"password": user.Password,
-		"email":    user.Email,
-		"role": 	"member",
+	invalidBod := map[string]interface{}{
+		"username": invalidUser.Username,
+		"password": invalidUser.Password,
+		"email":    invalidUser.Email,
+		"role":     "member",
 	}
+
 	// should return JSON containing jwt
 	endpoint := ControllerPrefix + "login/"
-	got := FetchPostResponseObject(t, endpoint, bod)
-	log.Print(got)
+	//got := FetchPostResponseObject(t, endpoint, validBod)
+	unauthorizedGot := FetchPostResponseObject(t, endpoint, invalidBod)
+
 	assertion := assert.New(t)
-	assertion.Equal(147, len(got))
+	//assertion.Equal(147, len(got))
+	fmt.Println(unauthorizedGot)
+	assertion.Equal(http.StatusUnauthorized, unauthorizedGot)
 }
