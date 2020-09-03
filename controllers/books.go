@@ -3,6 +3,7 @@ package controllers
 import (
 	"github.com/DevEdification/v2/models"
 	"github.com/gin-gonic/gin"
+	_ "github.com/swaggo/swag/example/celler/httputil"
 	"net/http"
 )
 
@@ -20,6 +21,18 @@ type updateBookInput struct {
 	URL     string `json:"url"`
 }
 
+// FindBooks godoc
+// @Summary Find a book
+// @Description retrieve all book entries
+// @ID get-list
+// @Accept json
+// @Produce json
+// @Success 200 {object} models.Book
+// @Header 200 {string} Token "qwerty"
+// @Failure 400 {object} httputil.HTTPError
+// @Failure 404 {object} httputil.HTTPError
+// @Failure 500 {object} httputil.HTTPError
+// @Router /books/ [get]
 // FindBooks retrieve a slice of all current books in main.books table
 func FindBooks(c *gin.Context) {
 	var books []models.Book
@@ -40,6 +53,17 @@ func FindBook(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": book})
 }
 
+// CreateBook godoc
+// @Summary Create a book
+// @Description create a book
+// @ID get-list
+// @Accept json
+// @Produce json
+// @Success 200 {object} models.Book
+// @Header 200 {string} Token "qwerty"
+// @Body 200
+// @Failure 400 {object} httputil.HTTPError
+// @Router /books/ [post]
 // CreateBook create a new book entry in main.books table
 func CreateBook(c *gin.Context) {
 	var input createBookInput
