@@ -7,6 +7,7 @@ import (
 
 	//"github.com/swaggo/files"
 	//_ "github.com/MartinHeinz/go-project-blueprint"
+	_ "github.com/DevEdification/v2/docs"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	"github.com/swaggo/gin-swagger"
@@ -23,7 +24,7 @@ import (
 // @contact.email hunterhartline87@gmail.com
 
 // @license.name MIT
-// @license.url "https://www.mit.edu/~amini/LICENSE.md"
+// @license.url "/LICENSE"
 
 // @host localhost:8080
 // @BasePath /api/v1

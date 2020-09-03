@@ -1,4 +1,28 @@
 basePath: /api/v1
+definitions:
+  httputil.HTTPError:
+    properties:
+      code:
+        example: 400
+        type: integer
+      message:
+        example: status bad request
+        type: string
+    type: object
+  models.Book:
+    properties:
+      author:
+        type: string
+      id:
+        type: integer
+      release:
+        type: string
+      title:
+        type: string
+      url:
+        type: string
+    type: object
+host: localhost:8080
 info:
   contact:
     email: hunterhartline87@gmail.com
@@ -6,9 +30,60 @@ info:
   description: Swagger page for Amozone Golang API.
   license:
     name: MIT
-    url: '"https://www.mit.edu/~amini/LICENSE.md"'
+    url: '"/LICENSE"'
   termsOfService: http://swagger.io/terms/
   title: Amozone API
   version: "2.0"
-paths: {}
+paths:
+  /books/:
+    get:
+      consumes:
+      - application/json
+      description: retrieve all book entries
+      operationId: get-list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              description: qwerty
+              type: string
+          schema:
+            $ref: '#/definitions/models.Book'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Find a book
+    post:
+      consumes:
+      - application/json
+      description: create a book
+      operationId: get-list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              description: qwerty
+              type: string
+          schema:
+            $ref: '#/definitions/models.Book'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Create a book
 swagger: "2.0"
