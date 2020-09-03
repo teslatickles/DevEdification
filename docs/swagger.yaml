@@ -1,0 +1,14 @@
+basePath: /api/v1
+info:
+  contact:
+    email: hunterhartline87@gmail.com
+    name: API Support
+  description: Swagger page for Amozone Golang API.
+  license:
+    name: MIT
+    url: '"https://www.mit.edu/~amini/LICENSE.md"'
+  termsOfService: http://swagger.io/terms/
+  title: Amozone API
+  version: "2.0"
+paths: {}
+swagger: "2.0"

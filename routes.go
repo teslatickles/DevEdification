@@ -2,17 +2,38 @@ package main
 
 import (
 	"github.com/DevEdification/v2/controllers"
+	//_ "github.com/MartinHeinz/go-project-blueprint/cmd/blueprint/config"
+	//_ "github.com/MartinHeinz/go-project-blueprint/pkg"
+
+	//"github.com/swaggo/files"
+	//_ "github.com/MartinHeinz/go-project-blueprint"
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	"github.com/swaggo/gin-swagger"
 	"log"
 	"net/http"
 )
 
-// initRoutes invokes initGin to init the gin engine
-// http framework allowing for router with baked-in goodies
-// also, initializes all routes for api
+// @title Amozone API
+// @version 2.0
+// @description Swagger page for Amozone Golang API.
+// @termsOfService http://swagger.io/terms/
+
+// @contact.name API Support
+// @contact.email hunterhartline87@gmail.com
+
+// @license.name MIT
+// @license.url "https://www.mit.edu/~amini/LICENSE.md"
+
+// @host localhost:8080
+// @BasePath /api/v1
+// @query.collection.format multi
 func initRoutes() {
 	// Init gin engine
 	r := initGin()
+
+	// Swagger API route
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	// Book routes
 	r.GET("/books/:id", controllers.FindBook)
