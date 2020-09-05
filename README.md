@@ -1,3 +1,5 @@
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/teslatickles/DevEdification)
+
 [![Go Report Card](https://goreportcard.com/badge/github.com/teslatickles/DevEdification)](https://goreportcard.com/report/github.com/teslatickles/DevEdification)
 
 Test-Driven-Developed RESTful API written solely in Go (Gorm, Gin, Go)
