@@ -4,6 +4,7 @@ import (
 	_ "github.com/jinzhu/gorm"
 )
 
+// User TODO: add Premium, Title fields
 // User user struct that defines user model
 type User struct {
 	ID       uint   `json:"id" gorm:"primary_key"`

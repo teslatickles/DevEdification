@@ -5,6 +5,7 @@ import (
 	_ "github.com/jinzhu/gorm"
 )
 
+// Book TODO: add ISBN, RetailSite fields
 // Book struct defining book model
 type Book struct {
 	ID      uint   `json:"id" gorm:"primary_key;unique;not null"`

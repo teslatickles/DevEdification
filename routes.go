@@ -2,17 +2,13 @@ package main
 
 import (
 	"github.com/DevEdification/v2/controllers"
-	//_ "github.com/MartinHeinz/go-project-blueprint/cmd/blueprint/config"
-	//_ "github.com/MartinHeinz/go-project-blueprint/pkg"
-
-	//"github.com/swaggo/files"
-	//_ "github.com/MartinHeinz/go-project-blueprint"
-	_ "github.com/DevEdification/v2/docs"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	"github.com/swaggo/gin-swagger"
 	"log"
 	"net/http"
+
+	_ "github.com/DevEdification/v2/docs"
 )
 
 // @title Amozone API
@@ -33,43 +29,56 @@ func initRoutes() {
 	// Init gin engine
 	r := initGin()
 
+	//c := controller.NewController()
+
+	v1 := r.Group("/api/v1")
+	{
+		// Book routes
+		books := v1.Group("/books")
+		{
+			books.GET(":id", controllers.FindBook)
+			books.GET("", controllers.FindBooks)
+			books.POST("", controllers.CreateBook)
+			books.PATCH(":id", controllers.UpdateBook)
+			books.DELETE(":id", controllers.DeleteBook)
+		}
+		// Website routes
+		websites := v1.Group("/websites")
+		{
+			websites.GET(":id", controllers.FindWebsite)
+			websites.GET("", controllers.FindWebsites)
+			websites.POST("", controllers.CreateWebsite)
+			websites.PATCH(":id", controllers.UpdateWebsite)
+			websites.DELETE(":id", controllers.DeleteWebsite)
+		}
+		// VizNug routes
+		viznugs := v1.Group("/viznugs")
+		{
+			viznugs.GET(":id", controllers.FindVizNug)
+			viznugs.GET("", controllers.FindVizNugs)
+			viznugs.POST("", controllers.CreateVizNug)
+			viznugs.PATCH(":id", controllers.UpdateVizNug)
+			viznugs.DELETE(":id", controllers.DeleteVizNug)
+		}
+		// User routes
+		users := v1.Group("/users")
+		{
+			users.GET(":id", controllers.FindUser)
+			users.GET(":id/login", controllers.Login)
+			users.POST("", controllers.CreateUser)
+			users.PATCH(":id", controllers.UpdateUser)
+			users.DELETE(":id", controllers.DeleteUser)
+		}
+	}
+
 	// Swagger API route
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-
-	// Book routes
-	r.GET("/books/:id", controllers.FindBook)
-	r.GET("/books", controllers.FindBooks)
-	r.POST("/books", controllers.CreateBook)
-	r.PATCH("/books/:id", controllers.UpdateBook)
-	r.DELETE("/books/:id", controllers.DeleteBook)
-
-	// Website routes
-	r.GET("/websites/:id", controllers.FindWebsite)
-	r.GET("/websites", controllers.FindWebsites)
-	r.POST("/websites", controllers.CreateWebsite)
-	r.PATCH("/websites/:id", controllers.UpdateWebsite)
-	r.DELETE("/websites/:id", controllers.DeleteWebsite)
-
-	// VizNug routes
-	r.GET("/viznugs/:id", controllers.FindVizNug)
-	r.GET("/viznugs", controllers.FindVizNugs)
-	r.POST("/viznugs", controllers.CreateVizNug)
-	r.PATCH("/viznugs/:id", controllers.UpdateVizNug)
-	r.DELETE("/viznugs/:id", controllers.DeleteVizNug)
-
-	// User routes
-	r.GET("/users/:id", controllers.FindUser)
-	r.POST("/users", controllers.CreateUser)
-	r.PATCH("/users/:id", controllers.UpdateUser)
-	r.DELETE("/users/:id", controllers.DeleteUser)
-	r.POST("/login", controllers.Login)
 
 	// attach router to server - handle errors
 	err := r.Run()
 	if err != nil {
 		log.Fatalln(err)
 	}
-
 }
 
 // initGin initialize gin engine with default configuration
