@@ -66,7 +66,7 @@ func TestUpdateBook(t *testing.T) {
 	if ConfirmEntryUpdate(t, endpoint, bod) {
 		nowGot = FetchGetResponseObject(t, endpoint)
 	} else {
-		t.Logf("Bad time with confirming the PATCH call as okay")
+		t.Logf("Unable to confirm updating of target entry")
 	}
 
 	assertion.Equal(newExpected, nowGot)

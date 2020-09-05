@@ -3,13 +3,28 @@ package main
 import (
 	"github.com/DevEdification/v2/controllers"
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	"github.com/swaggo/gin-swagger"
 	"log"
 	"net/http"
+
+	_ "github.com/DevEdification/v2/docs"
 )
 
-// initRoutes invokes initGin to init the gin engine
-// http framework allowing for router with baked-in goodies
-// also, initializes all routes for api
+// @title Amozone API
+// @version 2.0
+// @description Swagger page for Amozone Golang API.
+// @termsOfService http://swagger.io/terms/
+
+// @contact.name API Support
+// @contact.email hunterhartline87@gmail.com
+
+// @license.name MIT
+// @license.url "/LICENSE"
+
+// @host localhost:8080
+// @BasePath /api/v1
+// @query.collection.format multi
 func initRoutes() {
 	// Init gin engine
 	r := initGin()
@@ -49,11 +64,15 @@ func initRoutes() {
 		users := v1.Group("/users")
 		{
 			users.GET(":id", controllers.FindUser)
+			users.GET(":id/login", controllers.Login)
 			users.POST("", controllers.CreateUser)
 			users.PATCH(":id", controllers.UpdateUser)
 			users.DELETE(":id", controllers.DeleteUser)
 		}
 	}
+
+	// Swagger API route
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	// attach router to server - handle errors
 	err := r.Run()

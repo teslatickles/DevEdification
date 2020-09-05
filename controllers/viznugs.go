@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/DevEdification/v2/models"
 	"github.com/gin-gonic/gin"
+	_ "github.com/swaggo/swag/example/celler/httputil"
 	"net/http"
 )
 
@@ -25,6 +26,18 @@ type updateVizNugInput struct {
 	URL     string `json:"url"`
 }
 
+// FindVizNugs godoc
+// @Summary Find all viznugs
+// @Description retrieve all viznug entries
+// @ID get-list
+// @Accept json
+// @Produce json
+// @Success 200 {object} models.VizNug
+// @Header 200 {string} Token "qwerty"
+// @Failure 400 {object} httputil.HTTPError
+// @Failure 404 {object} httputil.HTTPError
+// @Failure 500 {object} httputil.HTTPError
+// @Router /viznugs/ [get]
 // FindVizNugs list all viznugs currently in db
 func FindVizNugs(c *gin.Context) {
 	var viznugs []models.VizNug
@@ -33,6 +46,18 @@ func FindVizNugs(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": viznugs})
 }
 
+// FindVizNug godoc
+// @Summary Find a viznug
+// @Description retrieve a viznug based on ID
+// @ID get-entry
+// @Accept json
+// @Produce json
+// @Success 200 {object} models.VizNug
+// @Header 200 {string} Token "qwerty"
+// @Failure 400 {object} httputil.HTTPError
+// @Failure 404 {object} httputil.HTTPError
+// @Failure 500 {object} httputil.HTTPError
+// @Router /viznugs/{id} [get]
 // FindVizNug find specific viznug based on id
 func FindVizNug(c *gin.Context) {
 	var viznug models.VizNug
@@ -45,6 +70,18 @@ func FindVizNug(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": viznug})
 }
 
+// CreateVizNug godoc
+// @Summary Create a viznug
+// @Description create a viznug based on ID
+// @ID create-entry
+// @Accept json
+// @Produce json
+// @Success 200 {object} models.VizNug
+// @Header 200 {string} Token "qwerty"
+// @Failure 400 {object} httputil.HTTPError
+// @Failure 404 {object} httputil.HTTPError
+// @Failure 500 {object} httputil.HTTPError
+// @Router /viznugs/{id} [post]
 // CreateVizNug add new viznug entry to viznug table
 func CreateVizNug(c *gin.Context) {
 	var input createVizNugInput
@@ -66,6 +103,19 @@ func CreateVizNug(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": viznug})
 }
 
+// UpdateVizNug godoc
+// @Summary Update a viznug
+// @Description update a viznug based on ID
+// @ID update-entry
+// @Accept json
+// @Produce json
+// @Param id path int true "id of viznug entry to update"
+// @Success 200 {object} models.VizNug
+// @Header 200 {string} Token "qwerty"
+// @Failure 400 {object} httputil.HTTPError
+// @Failure 404 {object} httputil.HTTPError
+// @Failure 500 {object} httputil.HTTPError
+// @Router /viznugs/{id} [patch]
 // UpdateVizNug update specific viznug based on id
 func UpdateVizNug(c *gin.Context) {
 	var update updateVizNugInput
@@ -84,6 +134,18 @@ func UpdateVizNug(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": true})
 }
 
+// DeleteVizNug godoc
+// @Summary Delete a viznug
+// @Description delete a viznug based on ID
+// @ID delete-entry
+// @Accept json
+// @Produce json
+// @Success 200 {object} models.VizNug
+// @Header 200 {string} Token "qwerty"
+// @Failure 400 {object} httputil.HTTPError
+// @Failure 404 {object} httputil.HTTPError
+// @Failure 500 {object} httputil.HTTPError
+// @Router /viznugs/{id} [delete]
 // DeleteVizNug delete specific viznug based on id
 func DeleteVizNug(c *gin.Context) {
 	var viznug models.VizNug
