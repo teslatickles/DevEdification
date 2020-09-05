@@ -15,7 +15,7 @@ import (
 )
 
 // ControllerPrefix global exported variable referencing localhost url for controller calls
-var ControllerPrefix = "http://localhost:8080/"
+var ControllerPrefix = "http://localhost:8080/api/v1/"
 
 // performRequest helper method to correctly handle executing gin requests necessary to test api
 func performRequest(r http.Handler, method, path string, body []byte) (*httptest.ResponseRecorder, *http.Request) {
