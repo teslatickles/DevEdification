@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/DevEdification/v2/controllers"
+	jwt "github.com/appleboy/gin-jwt/v2"
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	"github.com/swaggo/gin-swagger"
@@ -28,8 +29,6 @@ import (
 func initRoutes() {
 	// Init gin engine
 	r := initGin()
-
-	//c := controller.NewController()
 
 	v1 := r.Group("/api/v1")
 	{
@@ -64,15 +63,38 @@ func initRoutes() {
 		users := v1.Group("/users")
 		{
 			users.GET(":id", controllers.FindUser)
-			users.GET(":id/login", controllers.Login)
+			users.POST(":id/login", controllers.HandleLogin().LoginHandler)
+			//users.GET(":id/login", controllers.Login)
 			users.POST("", controllers.CreateUser)
 			users.PATCH(":id", controllers.UpdateUser)
 			users.DELETE(":id", controllers.DeleteUser)
 		}
+		// authorization routes and setup
+		auth := v1.Group("/auth")
+		{
+			// Refresh time can be longer than token timeout
+			auth.GET("/refresh_token", controllers.HandleLogin().RefreshHandler)
+			auth.Use(controllers.HandleLogin().MiddlewareFunc())
+			{
+				auth.GET("/hello", controllers.HelloHandler)
+			}
+		}
 	}
 
+	// solo calls - just chillin'
 	// Swagger API route
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	//
+	//r.POST("/login", controllers.HandleLogin().LoginHandler)
+
+	// important
+	r.NoRoute(controllers.HandleLogin().MiddlewareFunc(), func(c *gin.Context) {
+		claims := jwt.ExtractClaims(c)
+		log.Printf("NoRoute claims: %#v\n", claims)
+		c.JSON(404, gin.H{
+			"code": "PAGE_NOT_FOUND", "message": "Page not found",
+		})
+	})
 
 	// attach router to server - handle errors
 	err := r.Run()

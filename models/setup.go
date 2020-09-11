@@ -15,12 +15,12 @@ var DB *gorm.DB
 func ConnectDataBase() {
 	// uncomment gin.SetMode for production
 	// gin.SetMode(gin.ReleaseMode)
-	database, err := gorm.Open("mysql", "root:password@tcp(127.0.0.1:3306)/core?charset=utf8&parseTime=True&loc=Local")
+	database, err := gorm.Open("mysql", "root:1Paraprosdokian9@tcp(127.0.0.1:3306)/core?charset=utf8&parseTime=True&loc=Local")
 	if err != nil {
 		panic("Failed to connect to database!")
 	}
 
-	databaseTest, err := gorm.Open("mysql", "root:password@tcp(127.0.0.1:3306)/core_test?charset=utf8&parseTime=True&loc=Local")
+	databaseTest, err := gorm.Open("mysql", "root:1Paraprosdokian9@tcp(127.0.0.1:3306)/core_test?charset=utf8&parseTime=True&loc=Local")
 	if err != nil {
 		log.Fatalln(err)
 	}

@@ -5,6 +5,7 @@ go 1.15
 require (
 	github.com/MartinHeinz/go-project-blueprint v0.0.0-20200101162543-93e6e8cc7011
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
+	github.com/appleboy/gin-jwt/v2 v2.6.4
 	github.com/cpuguy83/go-md2man/v2 v2.0.0 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.6.3
